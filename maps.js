@@ -47,10 +47,6 @@ function GetWeatherMap(address){
             units: 'imperial'
         }).done(function(data){
             console.log(data);
-            // console.log(data.list[3].main.temp_max);
-            // $('#container-1').append(`<p>Low: ${data.list[3].main.temp_min}<span>&#176;</span></p>`);
-            // $('#container-1').append(`<p>High: ${data.list[3].main.temp_max}<span>&#176;</span></p>`);
-            // let counter = 0;
             let count = 2
             let checker = true;
             while (count <= 5){

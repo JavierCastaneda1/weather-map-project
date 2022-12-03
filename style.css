@@ -3,6 +3,7 @@
     justify-content: center;
     color: black;
     background: blue;
+    font-family: 'Roboto', sans-serif;
 }
 
 #btnSearch {
@@ -20,11 +21,13 @@
     flex-direction: row;
     justify-content: center;
     background:green;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container-1 {
     display:flex;
     flex-direction: column;
+    font-family: 'Roboto', sans-serif;
 }
 
 .masterContainer {
