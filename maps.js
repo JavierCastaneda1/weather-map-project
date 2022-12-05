@@ -1,6 +1,9 @@
 GetWeatherMap("dallas tx");
 
+let gMarker;
+
 function GetWeatherMap(address){
+    console.log(address);
     $('#container-1').empty();
     $('#container-2').empty();
     $('#container-3').empty();
@@ -11,20 +14,26 @@ function GetWeatherMap(address){
     mapboxgl.accessToken = mapboxKey;
     const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        style: 'mapbox://styles/mapbox/outdoors-v11', // style URL
         center: [0,0], // starting position [lng, lat]
         zoom: 9, // starting zoom
     });
     geocode(address, mapboxKey).then(function(result) {
         console.log(result);
         map.setCenter(result);
-        map.setZoom(20);
+        map.setZoom(10);
         lonG = result[0];
         latG = result[1];
         return result;
     }).then(function(result){
 
-        placeMarkerAndPopup(address, mapboxKey, map);
+        const marker = new mapboxgl.Marker({
+            draggable: true
+        })
+            .setLngLat([result[0], result[1]])
+            .addTo(map);
+        gMarker = marker;
+        gMarker.on('dragend', onDragEnd);
 
     }).then(function(){
         $.get("http://api.openweathermap.org/data/2.5/weather", {
@@ -72,20 +81,31 @@ function GetWeatherMap(address){
     })
 }
 
-
-
-function placeMarkerAndPopup(info, token, map) {
-    geocode(info, token).then(function(coordinates) {
-        var popup = new mapboxgl.Popup()
-        var marker = new mapboxgl.Marker({
-            draggable: true
+    function onDragEnd() {
+        const lngLat = gMarker.getLngLat();
+        console.log(lngLat.lng, lngLat.lat);
+        reverseGeocode(lngLat, mapboxKey).then(function(r){
+            GetWeatherMap(r,weatherKey);
         })
-            .setLngLat(coordinates)
-            .addTo(map)
-            .setPopup(popup);
-        popup.addTo(map);
-    });
+    }
+
+function reverseGeocode(coordinates, token) {
+    var baseUrl = 'https://api.mapbox.com';
+    var endPoint = '/geocoding/v5/mapbox.places/';
+    return fetch(baseUrl + endPoint + coordinates.lng + "," + coordinates.lat + '.json' + "?" + 'access_token=' + token)
+        .then(function(res) {
+            return res.json();
+        })
+        // to get all the data from the request, comment out the following three lines...
+        .then(function(data) {
+            return data.features[0].place_name;
+        })
 }
+
+
+
+
+
 
 
 
