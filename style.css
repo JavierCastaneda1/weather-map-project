@@ -6,8 +6,14 @@
     color: white;
 }
 
-body{
-    background-color:  lightgreen;
+html, body{
+    background-color:  gray;
+}
+
+.containerMap {
+    background: gray;
+    display: flex;
+    justify-content: center;
 }
 
 .containerHeading {
@@ -25,7 +31,7 @@ body{
 }
 
 h1 {
-    text-shadow: 0 0 5px lightgreen;
+    text-shadow: 0 0 10px black;
 }
 
 #btnSearch {
@@ -36,17 +42,19 @@ h1 {
 }
 
 #map {
-    width: 100vw;
+    width: 80vw;
     height: 50vh;
     border: solid 6px lightgreen;
     border-radius: 25px;
+    background: lightgreen;
+    overflow: hidden;
 }
 
 .container-10 {
     display:flex;
     flex-direction: row;
     justify-content: center;
-    background:lightgreen;
+    background:gray;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -72,6 +80,7 @@ h1 {
 #locaSearch {
     color: black;
     border-radius: 25px;
+    padding: 0 .5em;
 }
 
 ::placeholder {
