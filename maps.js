@@ -76,7 +76,6 @@ function GetWeatherMap(address){
                     }
                 }
             }
-
         }));
     })
 }
@@ -101,6 +100,15 @@ function reverseGeocode(coordinates, token) {
             return data.features[0].place_name;
         })
 }
+
+    $("#btnSearch").click(function(){
+    GetWeatherMap($(`#locaSearch`).val());
+
+});
+    $('#locaSearch').keyup(function(e){
+    if (e.key === 'Enter') {
+    GetWeatherMap($(`#locaSearch`).val());
+}});
 
 
 
